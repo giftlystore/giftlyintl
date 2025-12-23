@@ -1,0 +1,16 @@
+body{font-family:'Segoe UI';background:#faf7f2;margin:0;padding:20px}
+.navbar{display:flex;justify-content:space-between;align-items:center;background:#fff;padding:15px;border-radius:12px;box-shadow:0 4px 10px #ddd}
+.logo{font-size:20px;font-weight:bold}
+nav a{margin:0 10px;text-decoration:none;color:#333}
+.hamburger{display:none;font-size:22px;cursor:pointer}
+.filter select{padding:10px;border-radius:8px;border:1px solid #ccc;margin:20px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.card{background:#fff;padding:15px;border-radius:14px;box-shadow:0 6px 15px rgba(0,0,0,.08)}
+.card img{width:100%;border-radius:12px}
+.old{text-decoration:line-through;color:#999}
+.discount{color:#e63946;font-weight:bold}
+.price{font-size:18px;font-weight:bold}
+button{background:#6b4f3f;color:#fff;border:none;padding:12px;border-radius:10px;margin-top:10px;width:100%}
+.hero{width:100%;border-radius:14px;margin-bottom:15px}
+.info{color:#555;margin-top:10px}
+@media(max-width:768px){nav{display:none}.hamburger{display:block}#menu.show{display:block}}

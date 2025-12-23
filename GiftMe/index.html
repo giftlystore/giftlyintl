@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Giftly | Affordable Global Gift Delivery</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'Segoe UI',sans-serif}
+body{background:#f6f7fb;color:#222}
+
+/* NAVBAR */
+.navbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:14px 20px;background:#fff;box-shadow:0 4px 14px rgba(0,0,0,.06);
+  position:sticky;top:0;z-index:10
+}
+.logo{font-size:20px;font-weight:800;color:#7a3df0}
+.nav-links{display:flex;gap:18px}
+.nav-links a{text-decoration:none;color:#333;font-weight:600;font-size:14px}
+.menu-btn{display:none;font-size:22px;cursor:pointer}
+
+/* MOBILE DRAWER */
+.drawer{
+  position:fixed;top:0;right:-100%;width:70%;height:100%;
+  background:#fff;box-shadow:-4px 0 20px rgba(0,0,0,.1);
+  padding:20px;transition:.3s
+}
+.drawer a{display:block;margin:14px 0;text-decoration:none;color:#333;font-weight:600}
+.drawer.show{right:0}
+
+/* FILTER */
+.filter-bar{
+  max-width:1200px;margin:20px auto;padding:0 16px;
+  display:flex;gap:10px;overflow-x:auto
+}
+.filter-bar button{
+  padding:8px 14px;border:none;border-radius:20px;
+  background:#eaeaf5;font-size:13px;font-weight:600;cursor:pointer
+}
+.filter-bar button.active{background:#7a3df0;color:#fff}
+
+/* FLASH SALE */
+.flash-sale{
+  max-width:1200px;margin:10px auto 20px;padding:16px;
+  background:linear-gradient(135deg,#7a3df0,#9f6bff);
+  color:#fff;border-radius:14px
+}
+.flash-sale h3{margin-bottom:6px}
+
+/* GRID */
+.grid{
+  max-width:1200px;margin:auto;padding:0 16px 40px;
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:16px
+}
+.card{
+  background:#fff;border-radius:14px;overflow:hidden;
+  box-shadow:0 6px 18px rgba(0,0,0,.06)
+}
+.card img{
+  width:100%;height:160px;object-fit:cover;cursor:pointer
+}
+.card-body{padding:12px}
+.card-title{font-size:14px;font-weight:700;margin-bottom:4px}
+.price-old{text-decoration:line-through;color:#888;font-size:12px}
+.price-new{font-size:15px;font-weight:800;color:#7a3df0}
+.discount{font-size:12px;color:#e63946;font-weight:700;margin-bottom:6px}
+
+.add-cart-btn{
+  width:100%;
+  margin-top:8px;
+  padding:8px;
+  border:none;
+  border-radius:8px;
+  background:#7a3df0;
+  color:#fff;
+  font-size:13px;
+  font-weight:600;
+  cursor:pointer;
+}
+.add-cart-btn:hover{background:#5f2fd6}
+
+/* RESPONSIVE 
+@media(max-width:768px){
+  .nav-links{display:none}
+  .menu-btn{display:block}
+}*/
+</style>
+
+      <!-- Smartsupp Live Chat script -->
+    <script type="text/javascript">
+    var _smartsupp = _smartsupp || {};
+    _smartsupp.key = '5b99a2a99b90497b27aa80d08a784b475fae365e';
+    window.smartsupp||(function(d) {
+      var s,c,o=smartsupp=function(){ o._.push(arguments)};o._=[];
+      s=d.getElementsByTagName('script')[0];c=d.createElement('script');
+      c.type='text/javascript';c.charset='utf-8';c.async=true;
+      c.src='https://www.smartsuppchat.com/loader.js?';s.parentNode.insertBefore(c,s);
+    })(document);
+    </script>
+    <noscript> Powered by <a href=“https://www.smartsupp.com” target=“_blank”>Smartsupp</a>
+    </noscript>
+
+</head>
+<body>
+
+<!-- NAV -->
+<div class="navbar">
+  <div class="logo">🎁 Giftly</div>
+  <div class="nav-links">
+  <!--<a href="index.html">Home</a>
+  <a href="">Cart</a>
+  <a href="#">Track Delivery</a>-->
+  <a href="help.html">Help</a>
+  </div>
+  <!--<div class="menu-btn" onclick="toggleDrawer()">☰ MENU</div>-->
+</div>
+
+<div class="drawer" id="drawer">
+  <a href="index.html">Home</a>
+  <!--<a href="">Cart</a>
+  <a href="#">Track Delivery</a>-->
+  <a href="help.html">Help</a>
+</div>
+
+<!-- FILTER -->
+<div class="filter-bar" id="filterBar"></div>
+
+<!-- FLASH SALE -->
+<div class="flash-sale">
+  <h3>🔥 Flash Sale</h3>
+  <p>Limited time deals on selected gift items</p>
+</div>
+
+<!-- PRODUCT GRID -->
+<div class="grid" id="productGrid"></div>
+<script src="listing.js"></script>
+<script>
+function toggleDrawer(){
+  document.getElementById('drawer').classList.toggle('show')
+}
+
+
+
+const categories=["All",...new Set(products.map(p=>p.cat))];
+const filterBar=document.getElementById("filterBar");
+const grid=document.getElementById("productGrid");
+
+categories.forEach(c=>{
+  const btn=document.createElement("button");
+  btn.textContent=c;
+  btn.onclick=()=>renderProducts(c);
+  filterBar.appendChild(btn);
+});
+
+function renderProducts(cat="All"){
+  grid.innerHTML="";
+  document.querySelectorAll(".filter-bar button").forEach(b=>b.classList.remove("active"));
+  [...filterBar.children].find(b=>b.textContent===cat).classList.add("active");
+
+  products.filter(p=>cat==="All"||p.cat===cat).forEach(p=>{
+    const discount=Math.round((1-p.new/p.old)*100);
+    grid.innerHTML+=`
+    <div class="card">
+      <img src="${p.img}" onclick="location.href='product.html?id=${p.id}'">
+      <div class="card-body">
+        <div class="card-title">${p.name}</div>
+        <div class="price-old">$${p.old}</div>
+        <div class="price-new">$${p.new}</div>
+        <div class="discount">${discount}% OFF</div>
+        <button class="add-cart-btn" onclick="location.href='product.html?id=${p.id}'">
+          Add to Cart
+        </button>
+      </div>
+    </div>`;
+  });
+}
+
+renderProducts();
+</script>
+
+</body>
+</html>
